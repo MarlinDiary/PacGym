@@ -1,8 +1,6 @@
 # PacGym
 
-## API Reference
-
-### Core Methods
+## API
 
 ```javascript
 gym.reset()
@@ -17,14 +15,14 @@ gym.isWon()
 gym.step(moves)
 ```
 
-### Map Representation
+## Map
 - `%` = Wall
 - `.` = Dot
 - ` ` = Empty space
 - `P` = Pacman
 - `G` = Ghost
 
-### Movement Format
+## Movement
 ```javascript
 moves = {
     pacman: {row: targetRow, col: targetCol},
@@ -33,13 +31,13 @@ moves = {
 }
 ```
 
-### Scoring System
+## Scoring
 - Eat dot: +10 points
 - Each move: -1 point
 - Caught by ghost: -200 points
 - Complete level: +200 points
 
-## Example Usage
+## Example
 
 ```javascript
 gym.reset()
