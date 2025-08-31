@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', monospace;
+            background: #000;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        #score {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #ffeb3b;
+            text-align: center;
+        }
+        
+        #map-display {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1;
+            white-space: pre;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="score">0</div>
+    <div id="map-display"></div>
+    
+    <script src="js/maps.js"></script>
+    <script src="js/game-logic.js"></script>
+    <script src="js/text-renderer.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+    <script src="example.js"></script>
+</body>
+</html>
