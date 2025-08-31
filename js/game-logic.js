@@ -41,7 +41,6 @@ class GameEngine {
         }
         
         if (!isValidPosition(this.map.tiles, newRow, newCol)) {
-            this.notifyListeners();
             return false;
         }
         

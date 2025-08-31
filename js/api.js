@@ -111,7 +111,7 @@ window.gym = {
         if (moves.ghost0) ghostMoves[0] = moves.ghost0;
         if (moves.ghost1) ghostMoves[1] = moves.ghost1;
         
-        if (ghostMoves.length > 0) {
+        if (moves.ghost0 || moves.ghost1) {
             this.game.moveGhosts(ghostMoves);
         }
         

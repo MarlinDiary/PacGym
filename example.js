@@ -9,65 +9,43 @@ function randomAI(position) {
 }
 
 async function runGame() {
-    console.log('=== Starting Game with API Testing ===');
-    
-    console.log('\n1. Testing gym.reset()');
-    const resetResult = gym.reset();
-    console.log('   Reset result:', resetResult);
+    console.log('Starting game...');
+    gym.reset();
     
     let steps = 0;
     const maxSteps = 500;
     
     while (steps < maxSteps) {
-        console.log(`\n--- Step ${steps + 1} ---`);
-        
-        console.log('Current map:');
+        console.log(`\nStep ${steps + 1}`);
         console.log(gym.getMap());
         
-        console.log('\n2. Testing GET APIs:');
-        
         const pacPos = gym.getPacmanPosition();
-        console.log('   gym.getPacmanPosition():', pacPos);
-        
         const ghost0Pos = gym.getGhostPosition(0);
-        console.log('   gym.getGhostPosition(0):', ghost0Pos);
-        
         const ghost1Pos = gym.getGhostPosition(1);
-        console.log('   gym.getGhostPosition(1):', ghost1Pos);
         
-        const score = gym.getScore();
-        console.log('   gym.getScore():', score);
-        
-        const gameOver = gym.isGameOver();
-        console.log('   gym.isGameOver():', gameOver);
-        
-        const won = gym.isWon();
-        console.log('   gym.isWon():', won);
-        
-        const invalidGhost = gym.getGhostPosition(5);
-        console.log('   gym.getGhostPosition(5) [invalid]:', invalidGhost);
+        console.log('Pacman:', pacPos);
+        console.log('Ghost0:', ghost0Pos);
+        console.log('Ghost1:', ghost1Pos);
+        console.log('Score:', gym.getScore());
+        console.log('Game over:', gym.isGameOver());
+        console.log('Won:', gym.isWon());
         
         const moves = {
             pacman: randomAI(pacPos),
             ghost0: randomAI(ghost0Pos),
             ghost1: randomAI(ghost1Pos)
         };
-        console.log('3. Executing moves:', moves);
-        
-        const stepResult = gym.step(moves);
-        console.log('   gym.step() result:', stepResult);
+        console.log('Moves:', moves);
+        gym.step(moves);
         
         if (gym.isGameOver()) {
-            console.log('\n=== GAME OVER ===');
+            console.log('\nGAME OVER!');
             console.log('Final score:', gym.getScore());
-            console.log('Testing step after game over:');
-            const afterGameStep = gym.step(moves);
-            console.log('   gym.step() after game over:', afterGameStep);
             break;
         }
         
         if (gym.isWon()) {
-            console.log('\n=== VICTORY ===');
+            console.log('\nYOU WIN!');
             console.log('Final score:', gym.getScore());
             break;
         }
@@ -77,16 +55,15 @@ async function runGame() {
     }
     
     if (steps >= maxSteps) {
-        console.log(`\n=== Max steps (${maxSteps}) reached ===`);
+        console.log(`\nMax steps reached`);
         console.log('Final score:', gym.getScore());
     }
     
-    console.log('\n4. Testing reset after game:');
+    console.log('\nResetting...');
     gym.reset();
-    console.log('   Score after reset:', gym.getScore());
-    console.log('   Game over after reset:', gym.isGameOver());
-    console.log('   Pacman position after reset:', gym.getPacmanPosition());
+    console.log('Score:', gym.getScore());
+    console.log('Pacman:', gym.getPacmanPosition());
 }
 
 window.runGame = runGame;
-console.log('Type: runGame() to test all APIs');
+console.log('Type runGame() to start');

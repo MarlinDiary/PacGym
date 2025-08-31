@@ -16,7 +16,6 @@
         
         game.addListener(function(state) {
             scoreDisplay.textContent = state.score;
-            
             renderer.render();
         });
         
