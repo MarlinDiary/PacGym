@@ -1,5 +1,3 @@
-# PacGym
-
 ## API
 
 ```javascript
