@@ -1,6 +1,12 @@
 class GameEngine {
     constructor() {
         this.listeners = [];
+        this.scoringRules = {
+            eatDot: 10,
+            moveStep: -1,
+            caughtByGhost: -200,
+            completeLevel: 200
+        };
         this.reset();
     }
     
@@ -50,15 +56,15 @@ class GameEngine {
         const tile = this.map.tiles[newRow][newCol];
         if (tile === '.') {
             this.map.tiles[newRow][newCol] = ' ';
-            this.score += 10;
+            this.score += this.scoringRules.eatDot;
             this.dotsEaten++;
         }
         
-        this.score -= 1;
+        this.score += this.scoringRules.moveStep;
         
         if (this.dotsEaten === this.totalDots) {
             this.won = true;
-            this.score += 200;
+            this.score += this.scoringRules.completeLevel;
         }
         
         this.notifyListeners();
@@ -96,7 +102,7 @@ class GameEngine {
             const pacman = this.map.playerPosition;
             for (const ghost of this.map.ghostPositions) {
                 if (ghost.row === pacman.row && ghost.col === pacman.col) {
-                    this.score -= 200;
+                    this.score += this.scoringRules.caughtByGhost;
                     this.gameOver = true;
                     return true;
                 }
@@ -106,7 +112,7 @@ class GameEngine {
         
         for (const ghost of newGhostPositions) {
             if (newPacmanPos.row === ghost.row && newPacmanPos.col === ghost.col) {
-                this.score -= 200;
+                this.score += this.scoringRules.caughtByGhost;
                 this.gameOver = true;
                 return true;
             }
@@ -120,7 +126,7 @@ class GameEngine {
                 oldPacmanPos.col === newGhost.col &&
                 newPacmanPos.row === oldGhost.row && 
                 newPacmanPos.col === oldGhost.col) {
-                this.score -= 200;
+                this.score += this.scoringRules.caughtByGhost;
                 this.gameOver = true;
                 return true;
             }

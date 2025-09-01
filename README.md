@@ -11,6 +11,8 @@ gym.isGameOver()
 gym.isWon()
 
 gym.step(moves)
+
+gym.setScoring(rules)
 ```
 
 ## Map
@@ -21,6 +23,7 @@ gym.step(moves)
 - `G` = Ghost
 
 ## Movement
+
 ```javascript
 moves = {
     pacman: {row: targetRow, col: targetCol},
@@ -30,10 +33,15 @@ moves = {
 ```
 
 ## Scoring
-- Eat dot: +10 points
-- Each move: -1 point
-- Caught by ghost: -200 points
-- Complete level: +200 points
+
+```javascript
+gym.setScoring({
+    eatDot: 10,
+    moveStep: -1,
+    caughtByGhost: -200,
+    completeLevel: 200
+})
+```
 
 ## Example
 

@@ -132,5 +132,24 @@ window.gym = {
         }
         
         return true;
+    },
+    
+    setScoring: function(rules) {
+        if (!this.game) this.init();
+        
+        if (rules.eatDot !== undefined) {
+            this.game.scoringRules.eatDot = rules.eatDot;
+        }
+        if (rules.moveStep !== undefined) {
+            this.game.scoringRules.moveStep = rules.moveStep;
+        }
+        if (rules.caughtByGhost !== undefined) {
+            this.game.scoringRules.caughtByGhost = rules.caughtByGhost;
+        }
+        if (rules.completeLevel !== undefined) {
+            this.game.scoringRules.completeLevel = rules.completeLevel;
+        }
+        
+        return { ...this.game.scoringRules };
     }
 };

@@ -10,6 +10,14 @@ function randomAI(position) {
 
 async function runGame() {
     console.log('Starting game...');
+    
+    gym.setScoring({
+        eatDot: 50,
+        moveStep: -5,
+        caughtByGhost: -1000,
+        completeLevel: 500
+    });
+    
     gym.reset();
     
     let steps = 0;
