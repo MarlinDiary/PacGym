@@ -34,7 +34,7 @@ window.gym = {
             map[ghost.row][ghost.col] = 'G';
         });
         
-        if (!state.gameOver) {
+        if (state.pacman) {
             map[state.pacman.row][state.pacman.col] = 'P';
         }
         
@@ -76,52 +76,8 @@ window.gym = {
     },
     
     step: function(moves) {
-        if (!this.game) return false;
-        if (this.game.gameOver || this.game.won) return false;
-        
-        if (!moves) {
-            moves = {};
-        }
-        
-        const oldPacmanPos = {
-            row: this.game.map.playerPosition.row,
-            col: this.game.map.playerPosition.col
-        };
-        const oldGhostPositions = this.game.map.ghostPositions.map(g => ({...g}));
-        
-        if (moves.pacman) {
-            const currentPos = this.game.map.playerPosition;
-            const targetPos = moves.pacman;
-            
-            const dRow = targetPos.row - currentPos.row;
-            const dCol = targetPos.col - currentPos.col;
-            
-            let direction = null;
-            if (dRow === -1 && dCol === 0) direction = 'up';
-            else if (dRow === 1 && dCol === 0) direction = 'down';
-            else if (dRow === 0 && dCol === -1) direction = 'left';
-            else if (dRow === 0 && dCol === 1) direction = 'right';
-            
-            if (direction) {
-                this.game.movePacMan(direction);
-            }
-        }
-        
-        const ghostMoves = [];
-        if (moves.ghost0) ghostMoves[0] = moves.ghost0;
-        if (moves.ghost1) ghostMoves[1] = moves.ghost1;
-        
-        if (moves.ghost0 || moves.ghost1) {
-            this.game.moveGhosts(ghostMoves);
-        }
-        
-        const newPacmanPos = {
-            row: this.game.map.playerPosition.row,
-            col: this.game.map.playerPosition.col
-        };
-        const newGhostPositions = this.game.map.ghostPositions.map(g => ({...g}));
-        
-        this.game.checkCollisions(oldPacmanPos, newPacmanPos, oldGhostPositions, newGhostPositions);
+        if (!this.game) this.init();
+        const didStep = this.game.step(moves);
         
         if (this.renderer) {
             this.renderer.render();
@@ -131,25 +87,11 @@ window.gym = {
             }
         }
         
-        return true;
+        return didStep;
     },
     
     setScoring: function(rules) {
         if (!this.game) this.init();
-        
-        if (rules.eatDot !== undefined) {
-            this.game.scoringRules.eatDot = rules.eatDot;
-        }
-        if (rules.moveStep !== undefined) {
-            this.game.scoringRules.moveStep = rules.moveStep;
-        }
-        if (rules.caughtByGhost !== undefined) {
-            this.game.scoringRules.caughtByGhost = rules.caughtByGhost;
-        }
-        if (rules.completeLevel !== undefined) {
-            this.game.scoringRules.completeLevel = rules.completeLevel;
-        }
-        
-        return { ...this.game.scoringRules };
+        return this.game.setScoring(rules);
     }
 };

@@ -10,18 +10,11 @@ function randomAI(position) {
 
 async function runGame() {
     console.log('Starting game...');
-    
-    gym.setScoring({
-        eatDot: 50,
-        moveStep: -5,
-        caughtByGhost: -1000,
-        completeLevel: 500
-    });
-    
+
     gym.reset();
     
     let steps = 0;
-    const maxSteps = 500;
+    const maxSteps = 300;
     
     while (steps < maxSteps) {
         console.log(`\nStep ${steps + 1}`);
@@ -39,9 +32,7 @@ async function runGame() {
         console.log('Won:', gym.isWon());
         
         const moves = {
-            pacman: randomAI(pacPos),
-            ghost0: randomAI(ghost0Pos),
-            ghost1: randomAI(ghost1Pos)
+            pacman: randomAI(pacPos)
         };
         console.log('Moves:', moves);
         gym.step(moves);

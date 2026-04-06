@@ -1,4 +1,6 @@
 const DEFAULT_MAP = {
+    id: 'challenge',
+    name: 'Challenge Mode',
     width: 20,
     height: 11,
     layout: [
@@ -6,8 +8,8 @@ const DEFAULT_MAP = {
         '%....%........%....%',
         '%.%%.%.%%%%%%.%.%%.%',
         '%.%..............%.%',
-        '%.%.%%.%%  %%.%%.%.%',
-        '%......%    %......%',
+        '%.%.%%.%%..%%.%%.%.%',
+        '%......%....%......%',
         '%.%.%%.%%%%%%.%%.%.%',
         '%.%..............%.%',
         '%.%%.%.%%%%%%.%.%%.%',
@@ -16,8 +18,8 @@ const DEFAULT_MAP = {
     ],
     pacmanStart: { row: 9, col: 9, direction: 'right' },
     ghostStarts: [
-        { row: 5, col: 8 },
-        { row: 5, col: 11 }
+        { row: 1, col: 1 },
+        { row: 9, col: 18 }
     ]
 };
 
@@ -45,7 +47,9 @@ function getInitialMap() {
         ...DEFAULT_MAP,
         tiles: layoutToTiles(DEFAULT_MAP.layout),
         playerPosition: { ...DEFAULT_MAP.pacmanStart },
-        ghostPositions: DEFAULT_MAP.ghostStarts.map(pos => ({ ...pos }))
+        ghostPositions: DEFAULT_MAP.ghostStarts.map(pos => ({ ...pos })),
+        ghostPreviousPositions: DEFAULT_MAP.ghostStarts.map(pos => ({ ...pos })),
+        gameOver: false
     };
     delete map.layout;
     delete map.pacmanStart;

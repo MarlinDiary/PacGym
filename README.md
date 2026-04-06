@@ -11,8 +11,6 @@ gym.isGameOver()
 gym.isWon()
 
 gym.step(moves)
-
-gym.setScoring(rules)
 ```
 
 ## Map
@@ -26,21 +24,34 @@ gym.setScoring(rules)
 
 ```javascript
 moves = {
-    pacman: {row: targetRow, col: targetCol},
-    ghost0: {row: targetRow, col: targetCol},
-    ghost1: {row: targetRow, col: targetCol}
+    pacman: {row: targetRow, col: targetCol}
 }
 ```
 
-## Scoring
+Also supported:
 
 ```javascript
-gym.setScoring({
+gym.step({ pacman: 'left' })
+gym.step({ pacman: 3 })
+```
+
+Ghosts are not manually controlled. They now follow the same challenge logic as `PacAsm`:
+- Ghost 0: deterministic A* pursuit
+- Ghost 1: 80% A* pursuit, 20% legal non-A* diversion
+- Pacman and ghosts move simultaneously
+- Wall collisions, same-tile collisions, and swap collisions follow the challenge rules
+
+## Scoring
+
+Scoring is fixed to match the current `challenge`:
+
+```javascript
+{
     eatDot: 10,
-    moveStep: -1,
-    caughtByGhost: -200,
+    moveStep: 0,
+    caughtByGhost: 0,
     completeLevel: 200
-})
+}
 ```
 
 ## Example
@@ -50,13 +61,9 @@ gym.reset()
 
 while (!gym.isGameOver() && !gym.isWon()) {
     const pacPos = gym.getPacmanPosition()
-    const ghost0Pos = gym.getGhostPosition(0)
-    const ghost1Pos = gym.getGhostPosition(1)
     
     const moves = {
-        pacman: computePacmanMove(pacPos),
-        ghost0: computeGhostMove(ghost0Pos),
-        ghost1: computeGhostMove(ghost1Pos)
+        pacman: computePacmanMove(pacPos)
     }
     
     gym.step(moves)
